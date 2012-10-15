@@ -1,0 +1,281 @@
+{% extends "layout.html" %}
+{% block main %}
+
+<!-- Panel de Control -->
+<h3>Panel de Control</h3>
+<h5>Si alguna fila del control se pone de color rojo, haga click en ella para gestionar la contingencia.</h5>
+<table id="table" class="table table-bordered table-hover">
+  <thead>
+    <tr>
+	<th id="tipo">Control</th>
+	<th id="estado">Estado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id="acustico" class="success">
+	<td id="tipo">Acústico</td>
+	<td id="estado">Ok</td>
+    </tr>
+    <tr id="hidrico" class="success">
+	<td id="tipo">Hídrico </td>
+	<td id="estado">Ok</td>
+    </tr>
+    <tr id="electrico" class="success">
+	<td id="tipo">Eléctrico</td>
+	<td id="estado">Ok</td>
+    </tr>
+    <tr id="termico" class="success">
+	<td id="tipo">Térmico</td>
+	<td id="estado">Ok</td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Dialogos Gestión de Contingencias -->
+<div id="contTermica" title="Gestión de Contingencia Térmica">
+  <p>¿Qué hacer si subió la temperatura de la máquina?</p>
+  <p>Esta falla indica falta de líquido refrigerante, en cuyo caso debe hacer lo siguiente:</p>
+  <ol>
+    <li>Llame al personal de mantenimiento: Interno XXX</li>
+    <li>Comunique que el nivel de líquido refrigerante disminuyó</li>
+    <li>Realize una aclaración: Se debe llenar con al menos 3 litros.</li>
+    <li>Aguarde en línea a que se realize la operación</li>
+    <li>Una vez concretada, haga click en <b>Verificar temperatura</b> para constatar nuevamente la temperatura de las máquinas</li>
+    <li>Si la temperatura disminuyó, entonces este diálogo se cerrará y el estado volverá a color verde.</li>
+    <li>Si la temperatura sigue alta, entonces el diálogo no se cerrará. Comuniquese con el gerente de mantenimiento: Interno XXX</li>
+  </ol>
+</div>
+<div id="contElectrica" title="Gestión de Contingencia Eléctrica">
+  <p>¿Qué hacer en caso de falta de suministro eléctrico?</p>
+  <p>Esta falla indica falta de suministro eléctrico en la cinta principal, en cuyo caso debe hacer lo siguiente:</p>
+  <ol>
+    <li>Llame al personal de mantenimiento de la planta: Interno XXX</li>
+    <li>Comunique que el suministro eléctrico de la cinta principal se ha caído.</li>
+    <li>Realize una aclaración: En caso de ser un cortocircuito, llamar diréctamente a la empresa que provee el servicio específico.</li>
+    <li>Si se trata de un corte eléctrico general, indicar el uso de los generadores que se encuentran en el subsuelo, otorgando los códigos de los mismos: A4532 y A4533.</li>
+    <li>Una vez conectados los generadores, haga click en <b>Verificar suministro</b> para constatar nuevamente el suministro eléctrico de las máquinas</li>
+    <li>Si el suministro volvió correctamente, entonces este diálogo se cerrará y el estado volverá a color verde.</li>
+    <li>Si las máquinas siguen sin suministro, entonces el diálogo no se cerrará. Comuniquese con el gerente de mantenimiento: Interno XXX</li>
+  </ol>
+</div>
+<div id="contAcustica" title="Gestión de Contingencia Acústica">
+  <p>¿Qué hacer si una máquina hace mucho ruido?</p>
+  <p>Esta falla indica el exceso de ruido en el sector de motores de la cinta principal, en cuyo caso debe hacer lo siguiente:</p>
+  <ol>
+    <li>Llame al personal de mantenimiento de la planta: Interno XXX</li>
+    <li>Comunique que el nivel de decibeles en dicho sector está por encima de lo normal.</li>
+    <li>Indique verificar el nivel de aceite de los motores, que suele ser la principal causa de falta de lubricación.</li>
+    <li>Indique el tipo de aceite que deben llevar: sintético de segundo grado.</li>
+    <li>Una vez colocado el aceite, verifique:</li>
+    <li>Si los decibeles vuelven a ser los normales, entonces este diálogo se cerrará y el estado volverá a color verde.</li>
+    <li>Si los niveles siguen altos, entonces el diálogo no se cerrará. Comuniquese con el gerente de mantenimiento: Interno XXX</li>
+  </ol>
+</div>
+<div id="contHidrica" title="Gestión de Contingencia Hídrica">
+  <p>¿Qué hacer si las máquinas no llenan las botellas con líquido?</p>
+  <p>Esto se debe a un problema en la válvula de la bomba NH1-9892.</p>
+  <ol>
+    <li>Llame al personal de mantenimiento de la planta: Interno XXX</li>
+    <li>Comunique la falta de suministro de líquidos.</li>
+    <li>Indique la apertura de la válvula auxiliar.</li>
+    <li>Una vez abierta la válvula auxiliar, verifique:</li>
+    <li>Si el líquido volvió a salir, entonces este diálogo se cerrará y el estado volverá a color verde.</li>
+    <li>Si el líquido sigue sin salir, entonces el diálogo no se cerrará. Comuniquese con el gerente de mantenimiento: Interno XXX</li>
+  </ol>
+</div>
+
+<!-- Simulación de Contingencia -->
+<div id="simulacionCont" title="Simulación de contingencia">
+  <h5>Aquí podrá simular una contingencia. Sólo debe elegir el tipo y hacer click en "Simular"</h5>
+  <p><label for="id_tipo_cont">Tipo:</label></p>
+  <select id="id_tipo_cont" name="tipo_cont">
+    <option>Eléctrica</option>
+    <option>Hídrica</option>
+    <option>Acústica</option>
+    <option>Térmica</option>
+  </select>
+</div>
+<hr>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#contElectrica').hide();
+    $('#contTermica').hide();
+    $('#contAcustica').hide();
+    $('#contHidrica').hide();
+
+    /* Simulador Contingencias */
+    $('#simulacionCont').hide();
+    $("#simuladorCont").click(function(){
+	$("#simulacionCont").dialog({
+	    show: "fade",
+            hide: "explode",
+            resizable: false,
+            height:300,
+            width:600,
+            modal: true,
+            buttons: {
+                "Simular": function() {
+                    var tipo = $('#id_tipo_cont').val();
+		    switch(tipo){
+		      case "Eléctrica":
+		        contingenciaElectrica();
+		        break;
+		      case "Hídrica":
+			contingenciaHidrica();
+		        break;
+		      case "Acústica":
+		        contingenciaAcustica();
+		       break;
+		      case "Térmica":
+		        contingenciaTermica();
+		        break;
+		    }
+                    $( this ).dialog( "close" );
+                },
+                "Cancelar": function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+        });
+    })
+    
+    /* Contingencias */
+    function contingenciaElectrica(){
+      $('table tr#electrico').removeClass();
+      $('table tr#electrico').addClass('error');
+      $('table tr#electrico td#estado').empty();
+      $('table tr#electrico td#estado').html("Error!");
+      $('table tr#electrico').click(function(){
+	  $("#contElectrica").dialog({
+	    show: "fade",
+            hide: "explode",
+            resizable: false,
+            height:500,
+            width:700,
+            modal: true,
+	    buttons: {
+                "Verificar suministro": function() {
+                    solucionarContingenciaElectrica();
+                    $( this ).dialog( "close" );
+                },
+                "Cancelar": function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+          });
+      })
+    }
+
+    function solucionarContingenciaElectrica(){
+      $('table tr#electrico').removeClass();
+      $('table tr#electrico').addClass('success');
+      $('table tr#electrico td#estado').empty();
+      $('table tr#electrico td#estado').html("Ok");
+      $('table tr#electrico').unbind("click");
+    }
+
+    function contingenciaTermica(){
+      $('table tr#termico').removeClass();
+      $('table tr#termico').addClass('error');
+      $('table tr#termico td#estado').empty();
+      $('table tr#termico td#estado').html("Error!");
+      $('table tr#termico').click(function(){
+	  $("#contTermica").dialog({
+	    show: "fade",
+            hide: "explode",
+            resizable: false,
+            height:400,
+            width:700,
+            modal: true,
+	    buttons: {
+                "Verificar temperatura": function() {
+                    solucionarContingenciaTermica();
+                    $( this ).dialog( "close" );
+                },
+                "Cancelar": function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+          });
+      })
+    }
+
+    function solucionarContingenciaTermica(){
+      $('table tr#termico').removeClass();
+      $('table tr#termico').addClass('success');
+      $('table tr#termico td#estado').empty();
+      $('table tr#termico td#estado').html("Ok");
+      $('table tr#termico').unbind("click");
+    }
+
+    function contingenciaHidrica(){
+      $('table tr#hidrico').removeClass();
+      $('table tr#hidrico').addClass('error');
+      $('table tr#hidrico td#estado').empty();
+      $('table tr#hidrico td#estado').html("Error!");
+      $('table tr#hidrico').click(function(){
+	  $("#contHidrica").dialog({
+	    show: "fade",
+            hide: "explode",
+            resizable: false,
+            height:400,
+            width:700,
+            modal: true,
+	    buttons: {
+                "Verificar líquido": function() {
+                    solucionarContingenciaHidrica();
+                    $( this ).dialog( "close" );
+                },
+                "Cancelar": function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+          });
+      })
+    }
+
+    function solucionarContingenciaHidrica(){
+      $('table tr#hidrico').removeClass();
+      $('table tr#hidrico').addClass('success');
+      $('table tr#hidrico td#estado').empty();
+      $('table tr#hidrico td#estado').html("Ok");
+      $('table tr#hidrico').unbind("click");
+    }
+
+    function contingenciaAcustica(){
+      $('table tr#acustico').removeClass();
+      $('table tr#acustico').addClass('error');
+      $('table tr#acustico td#estado').empty();
+      $('table tr#acustico td#estado').html("Error!");
+      $('table tr#acustico').click(function(){
+	  $("#contAcustica").dialog({
+	    show: "fade",
+            hide: "explode",
+            resizable: false,
+            height:500,
+            width:700,
+            modal: true,
+	    buttons: {
+                "Verificar decibeles": function() {
+                    solucionarContingenciaAcustica();
+                    $( this ).dialog( "close" );
+                },
+                "Cancelar": function() {
+                    $( this ).dialog( "close" );
+                }
+            }
+          });
+      })
+    }
+
+    function solucionarContingenciaAcustica(){
+      $('table tr#acustico').removeClass();
+      $('table tr#acustico').addClass('success');
+      $('table tr#acustico td#estado').empty();
+      $('table tr#acustico td#estado').html("Ok");
+      $('table tr#acustico').unbind("click");
+    }
+  });
+</script>
+{% endblock %}

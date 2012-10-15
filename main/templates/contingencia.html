@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block main %}
+<b> Explicación: </b>
+</br>
+  Aquí podrá simular el acontecimiento de una contingencia. Sólo tiene que indicar que tipo de contingencia desea generar y hacer click en <b> Frozar </b>
+<hr/> 
+  <form action="/control/" method="post">
+    <p><label for="id_code_type">Tipo:</label>
+	<select id="id_code_type" name="code_type">
+	  <option>Eléctrica</option>
+	  <option>Hídrica</option>
+	  <option>Acústica</option>
+	  <option>Térmica</option>
+	</select>
+    </br>
+    <input type="submit" class="btn" value="Forzar" />
+  </form>
+<hr/> 
+{% endblock %}

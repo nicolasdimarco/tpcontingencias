@@ -1,0 +1,7 @@
+from django.db import models
+
+class Failure(models.Model):
+    area = models.CharField(max_length=20)
+    code_type = models.CharField(max_length=10)
+    description = models.CharField(max_length=60)
+    solve_description = models.CharField(max_length=60)

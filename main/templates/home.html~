@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block main %}
+<h2>Introducción</h2>
+<h3> ¡Bienvenido al Sistema de control de máquinas de la embotelladora Botellitas S.A.! </br></h3>
+<h5> Para acceder al panel de control debe hacer click en la barra del menú de navegación principal, sobre la opción <b> "Control"</b>.</h5>
+Allí podrá visualizar el panel de control de la máquinas que residen dentro de la sala donde se embotellan los diferentes productos que distribuyen nuestros clientes. El panel de control consta de 4 indicadores, si los mismos se encuentran en color <b>verde</b>, significa que no hay nada de que preocuparse y que todo marcha a la perfección. Preste mucha atención, pues si alguno de ellos se torna de color <b>rojo</b>, entonces deberá hacer click sobre él y seguir las instrucciones que lo ayudaran a gestionar la contingencia que pudiera ocurrir.
+¡Mucha suerte!
+<p>
+  </br><b>Aclaración:</b>
+  El simulador de contingencias fue desarrollado para testear las funcionalidades del gestor de contingencias. Funciona únicamente cuando el usuario está dentro del panel de control. Para utilizarlo, una vez dentro del panel de control, haga click en el botón rojo de la barra de navegación que dice "Simular Contingencia" y a continuación se abrirá un diálogo que lo guiará para simular la contingencia deseada.
+</p>
+{% endblock %}
