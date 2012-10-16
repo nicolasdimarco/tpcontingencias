@@ -207,6 +207,7 @@
       $('table tr#termico td#estado').empty();
       $('table tr#termico td#estado').html("Ok");
       $('table tr#termico').unbind("click");
+      alert("Problema solucionado! se cerrará el diálogo de ayuda");
     }
 
     function contingenciaHidrica(){
@@ -253,7 +254,7 @@
 	    show: "fade",
             hide: "explode",
             resizable: false,
-            height:400,
+            height:500,
             width:700,
             modal: true,
 	    buttons: {
