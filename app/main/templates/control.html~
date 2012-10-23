@@ -7,26 +7,31 @@
 <table id="table" class="table table-bordered table-hover">
   <thead>
     <tr>
-	<th id="tipo">Control</th>
-	<th id="estado">Estado</th>
+        <th class="activo">Activo</th>
+	<th class="tipo">Control</th>
+	<th class="estado">Estado</th>
     </tr>
   </thead>
   <tbody>
-    <tr id="acustico" class="success">
-	<td id="tipo">Acústico</td>
-	<td id="estado">Ok</td>
+    <tr id="Maquina1" class="success acustico">
+        <td class="activo">Máquina 1</td>
+	<td class="tipo">Acústico</td>
+	<td class="estado">Ok</td>
     </tr>
-    <tr id="hidrico" class="success">
-	<td id="tipo">Hídrico </td>
-	<td id="estado">Ok</td>
+    <tr id="Maquina2" class="success hidrico">
+        <td class="activo">Máquina 2</td>
+	<td class="tipo">Hídrico </td>
+	<td class="estado">Ok</td>
     </tr>
-    <tr id="electrico" class="success">
-	<td id="tipo">Eléctrico</td>
-	<td id="estado">Ok</td>
+    <tr id="Maquina3" class="success electrico">
+        <td class="activo">Máquina 3</td>
+	<td class="tipo">Eléctrico</td>
+	<td class="estado">Ok</td>
     </tr>
-    <tr id="termico" class="success">
-	<td id="tipo">Térmico</td>
-	<td id="estado">Ok</td>
+    <tr id="Maquina4" class="success termico">
+        <td class="activo">Máquina 4</td>
+	<td class="tipo">Térmico</td>
+	<td class="estado">Ok</td>
     </tr>
   </tbody>
 </table>
@@ -47,10 +52,10 @@
 </div>
 <div id="contElectrica" title="Gestión de Contingencia Eléctrica">
   <p>¿Qué hacer en caso de falta de suministro eléctrico?</p>
-  <p>Esta falla indica falta de suministro eléctrico en la cinta principal, en cuyo caso debe hacer lo siguiente:</p>
+  <p>Esta falla indica falta de suministro eléctrico por parte del reactor principal, en cuyo caso debe hacer lo siguiente:</p>
   <ol>
     <li>Llame al personal de mantenimiento de la planta: Interno XXX</li>
-    <li>Comunique que el suministro eléctrico de la cinta principal se ha caído.</li>
+    <li>Comunique que el suministro eléctrico del reactor principal se ha visto interrumpido.</li>
     <li>Realize una aclaración: En caso de ser un cortocircuito, llamar diréctamente a la empresa que provee el servicio específico.</li>
     <li>Si se trata de un corte eléctrico general, indicar el uso de los generadores que se encuentran en el subsuelo, otorgando los códigos de los mismos: A4532 y A4533.</li>
     <li>Una vez conectados los generadores, haga click en <b>Verificar suministro</b> para constatar nuevamente el suministro eléctrico de las máquinas</li>
@@ -95,7 +100,23 @@
     <option>Térmica</option>
   </select>
 </div>
+
 <hr>
+
+<a id="linkAgregar" href="#"><h5>Agregar Activo</h5></a>
+<div id="formAgregarActivo" style="border: 1px solid #DDD;border-collapse: separate;border-left: 0;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;padding:25px;">
+    <label for="nombreActivo">Activo:</label>
+    <input type="text" id="nombreActivo"/>
+    <label for="tipoControl">Control:</label>
+    <select id="tipoControl" name="tipo_cont">
+        <option>Eléctrico</option>
+        <option>Hídrico</option>
+        <option>Acústico</option>
+        <option>Térmico</option>
+    </select>
+    </br>
+    <button id="agregarActivo" type="button" class="btn">Agregar</button>
+</div>
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -103,6 +124,11 @@
     $('#contTermica').hide();
     $('#contAcustica').hide();
     $('#contHidrica').hide();
+    $('#formAgregarActivo').hide();
+    $('#agregarActivo').click(function(){agregarActivo();});
+    $('#linkAgregar').click(function(){
+        $('#formAgregarActivo').toggle('slow');
+    });
 
     /* Simulador Contingencias */
     $('#simulacionCont').hide();
@@ -142,11 +168,11 @@
     
     /* Contingencias */
     function contingenciaElectrica(){
-      $('table tr#electrico').removeClass();
-      $('table tr#electrico').addClass('error');
-      $('table tr#electrico td#estado').empty();
-      $('table tr#electrico td#estado').html("Error!");
-      $('table tr#electrico').click(function(){
+      $('table tr.electrico').removeClass('success');
+      $('table tr.electrico').addClass('error');
+      $('table tr.electrico td.estado').empty();
+      $('table tr.electrico td.estado').html("Error!");
+      $('table tr.electrico').click(function(){
 	  $("#contElectrica").dialog({
 	    show: "fade",
             hide: "explode",
@@ -168,19 +194,20 @@
     }
 
     function solucionarContingenciaElectrica(){
-      $('table tr#electrico').removeClass();
-      $('table tr#electrico').addClass('success');
-      $('table tr#electrico td#estado').empty();
-      $('table tr#electrico td#estado').html("Ok");
-      $('table tr#electrico').unbind("click");
+      $('table tr.electrico').removeClass('error');
+      $('table tr.electrico').addClass('success');
+      $('table tr.electrico td.estado').empty();
+      $('table tr.electrico td.estado').html("Ok");
+      $('table tr.electrico').unbind("click");
+      alert("Problema solucionado! se cerrará el diálogo de ayuda");
     }
 
     function contingenciaTermica(){
-      $('table tr#termico').removeClass();
-      $('table tr#termico').addClass('error');
-      $('table tr#termico td#estado').empty();
-      $('table tr#termico td#estado').html("Error!");
-      $('table tr#termico').click(function(){
+      $('table tr.termico').removeClass('success');
+      $('table tr.termico').addClass('error');
+      $('table tr.termico td.estado').empty();
+      $('table tr.termico td.estado').html("Error!");
+      $('table tr.termico').click(function(){
 	  $("#contTermica").dialog({
 	    show: "fade",
             hide: "explode",
@@ -202,20 +229,20 @@
     }
 
     function solucionarContingenciaTermica(){
-      $('table tr#termico').removeClass();
-      $('table tr#termico').addClass('success');
-      $('table tr#termico td#estado').empty();
-      $('table tr#termico td#estado').html("Ok");
-      $('table tr#termico').unbind("click");
+      $('table tr.termico').removeClass('error');
+      $('table tr.termico').addClass('success');
+      $('table tr.termico td.estado').empty();
+      $('table tr.termico td.estado').html("Ok");
+      $('table tr.termico').unbind("click");
       alert("Problema solucionado! se cerrará el diálogo de ayuda");
     }
 
     function contingenciaHidrica(){
-      $('table tr#hidrico').removeClass();
-      $('table tr#hidrico').addClass('error');
-      $('table tr#hidrico td#estado').empty();
-      $('table tr#hidrico td#estado').html("Error!");
-      $('table tr#hidrico').click(function(){
+      $('table tr.hidrico').removeClass('success');
+      $('table tr.hidrico').addClass('error');
+      $('table tr.hidrico td.estado').empty();
+      $('table tr.hidrico td.estado').html("Error!");
+      $('table tr.hidrico').click(function(){
 	  $("#contHidrica").dialog({
 	    show: "fade",
             hide: "explode",
@@ -237,19 +264,20 @@
     }
 
     function solucionarContingenciaHidrica(){
-      $('table tr#hidrico').removeClass();
-      $('table tr#hidrico').addClass('success');
-      $('table tr#hidrico td#estado').empty();
-      $('table tr#hidrico td#estado').html("Ok");
-      $('table tr#hidrico').unbind("click");
+      $('table tr.hidrico').removeClass('error');
+      $('table tr.hidrico').addClass('success');
+      $('table tr.hidrico td.estado').empty();
+      $('table tr.hidrico td.estado').html("Ok");
+      $('table tr.hidrico').unbind("click");
+      alert("Problema solucionado! se cerrará el diálogo de ayuda");
     }
 
     function contingenciaAcustica(){
-      $('table tr#acustico').removeClass();
-      $('table tr#acustico').addClass('error');
-      $('table tr#acustico td#estado').empty();
-      $('table tr#acustico td#estado').html("Error!");
-      $('table tr#acustico').click(function(){
+      $('table tr.acustico').removeClass('success');
+      $('table tr.acustico').addClass('error');
+      $('table tr.acustico td.estado').empty();
+      $('table tr.acustico td.estado').html("Error!");
+      $('table tr.acustico').click(function(){
 	  $("#contAcustica").dialog({
 	    show: "fade",
             hide: "explode",
@@ -271,11 +299,51 @@
     }
 
     function solucionarContingenciaAcustica(){
-      $('table tr#acustico').removeClass();
-      $('table tr#acustico').addClass('success');
-      $('table tr#acustico td#estado').empty();
-      $('table tr#acustico td#estado').html("Ok");
-      $('table tr#acustico').unbind("click");
+      $('table tr.acustico').removeClass('error');
+      $('table tr.acustico').addClass('success');
+      $('table tr.acustico td.estado').empty();
+      $('table tr.acustico td.estado').html("Ok");
+      $('table tr.acustico').unbind("click");
+      alert("Problema solucionado! se cerrará el diálogo de ayuda");
+    }
+
+    function agregarActivo(){
+        var nombreActivo = $("#nombreActivo").val();
+        var tipoControl = $("#tipoControl").val();
+	var claseTipoControl = obtenerClaseTipoControl(tipoControl);
+        
+        if(nombreActivo != "" && nombreValido(nombreActivo)){
+	    var nuevaLinea = "<tr id='" + nombreActivo + "' class='success " + claseTipoControl + "'><td class='activo'>" + nombreActivo + "</td><td class='tipo'>" + tipoControl + "</td><td class='estado'>Ok</td></tr>"
+            $("#table").append(nuevaLinea);
+            $("table tr#" + nombreActivo).hide().show('slow')
+            $("#nombreActivo").val('');
+        }
+    }
+
+    function nombreValido(nombreActivo){
+        var nombre = "";
+	var encontro = false;
+	$("table tr td.activo").each(function(){
+	    nombre = $(this).html();
+	    if(nombre == nombreActivo){
+		encontro = true;
+                alert("Activo ya existente!");
+	    }
+	});
+	return encontro==false;
+    }
+
+    function obtenerClaseTipoControl(tipoControl){
+	switch(tipoControl){
+		case "Eléctrico":
+			return "electrico";
+		case "Hídrico":
+			return "hidrico";
+		case "Acústico":
+			return "acustico";
+		case "Térmico":
+			return "termico";
+	}
     }
   });
 </script>
