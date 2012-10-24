@@ -65,7 +65,7 @@
 </div>
 <div id="contAcustica" title="Gestión de Contingencia Acústica">
   <p>¿Qué hacer si una máquina hace mucho ruido?</p>
-  <p>Esta falla indica el exceso de ruido en el sector de motores de la cinta principal, en cuyo caso debe hacer lo siguiente:</p>
+  <p>Esta falla indica el exceso de ruido por parte de una máquina en particular, en cuyo caso debe hacer lo siguiente:</p>
   <ol>
     <li>Llame al personal de mantenimiento de la planta: Interno XXX</li>
     <li>Comunique que el nivel de decibeles en dicho sector está por encima de lo normal.</li>
@@ -104,7 +104,7 @@
 <hr>
 
 <a id="linkAgregar" href="#"><h5>Agregar Activo</h5></a>
-<div id="formAgregarActivo" style="border: 1px solid #DDD;border-collapse: separate;border-left: 0;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;padding:25px;">
+<div id="formAgregarActivo" style="border: 1px solid #DDD;border-collapse: separate;border-left: 1;-webkit-border-radius: 4px;-moz-border-radius: 4px;border-radius: 4px;padding:25px;">
     <label for="nombreActivo">Activo:</label>
     <input type="text" id="nombreActivo"/>
     <label for="tipoControl">Control:</label>
